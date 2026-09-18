@@ -23,8 +23,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
         working-directory: ./
-      - name: Build proyect
-        run: npm run build
       - name: Run unit test
         run: npm test -- --run
 
