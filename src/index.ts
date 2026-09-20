@@ -13,10 +13,6 @@
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		return new Response(`"
-			╱|、
-			(˚ˎ 。7
-			|、˜〵
-			じしˍ,)ノ"`);
+		return new Response("HOLA ;)");
 	},
 } satisfies ExportedHandler<Env>;
