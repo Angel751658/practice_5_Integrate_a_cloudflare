@@ -11,8 +11,6 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import { queryObjects } from "node:v8";
-
 export interface Env {
 	p6: D1Database;
 }

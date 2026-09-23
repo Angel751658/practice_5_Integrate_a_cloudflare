@@ -6,12 +6,11 @@
 	"observability": {
 		"enabled": true
 	},
-	"d1_database": [
+	"d1_databases": [
 		{
 			"binding": "p6",
 			"database_name": "p6",
 			"database_id": "a3950ad9-3a24-4614-a311-4be62fba4206"
-
 		}
 	]
 }
