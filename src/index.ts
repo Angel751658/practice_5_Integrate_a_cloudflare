@@ -11,8 +11,21 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
+import { queryObjects } from "node:v8";
+
+export interface Env {
+	p6: D1Database;
+}
+
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		return new Response("Hello World!");
+		const data = await this.queryDatabase(env.p6);
+		return Response.json({ message: "Hello World 3!", dbData: data });
 	},
+
+	async queryDatabase(db: D1Database) {
+		const { results } = await db.prepare("SELECT * FROM users").all();
+		return results;
+	}
 } satisfies ExportedHandler<Env>;
+
