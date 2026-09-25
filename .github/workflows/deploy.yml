@@ -71,13 +71,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Apply production D1 migrations
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.API_KEY }}
-          accountId: ${{ secrets.ACCOUNT_ID }}
-          command: d1 migrations apply p6 --env production --remote
-
       - name: Deploy to Cloudflare Workers (Prod)
         uses: cloudflare/wrangler-action@v3
         with:
