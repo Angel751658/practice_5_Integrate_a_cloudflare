@@ -13,6 +13,7 @@
 
 export interface Env {
 	p6: D1Database;
+	ENVIRONMENT?: string;
 }
 
 export default {
