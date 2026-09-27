@@ -35,6 +35,29 @@ jobs:
       - name: Run unit tests with coverage
         run: npm run test:coverage
 
+      - name: Add coverage table to workflow summary
+        run: |
+          node --input-type=module <<'NODE'
+          import { appendFileSync, readFileSync } from 'node:fs';
+          import { relative, sep } from 'node:path';
+
+          const coverage = JSON.parse(readFileSync('coverage/coverage-summary.json', 'utf8'));
+          const percent = (metric) =>
+            typeof metric.pct === 'number' ? `${metric.pct.toFixed(1)}%` : metric.pct;
+          const rows = Object.entries(coverage)
+            .map(([file, metrics]) => {
+              const name =
+                file === 'total' ? '**All files**' : relative(process.cwd(), file).split(sep).join('/');
+              return `| ${name} | ${percent(metrics.statements)} | ${percent(metrics.branches)} | ${percent(metrics.functions)} | ${percent(metrics.lines)} |`;
+            })
+            .join('\n');
+
+          appendFileSync(
+            process.env.GITHUB_STEP_SUMMARY,
+            `## Coverage report\n\n| File | % Stmts | % Branch | % Funcs | % Lines |\n| --- | ---: | ---: | ---: | ---: |\n${rows}\n`,
+          );
+          NODE
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
